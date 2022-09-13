@@ -11,17 +11,6 @@ export type todolistsType = {
 export type FilterValuesType = "all" | "active" | "completed";
 
 function App() {
-
-    // let [tasks, setTasks] = useState([
-    //     {id: v1(), title: "HTML&CSS", isDone: true},
-    //     {id: v1(), title: "JS", isDone: true},
-    //     {id: v1(), title: "ReactJS", isDone: false},
-    //     {id: v1(), title: "Rest API", isDone: false},
-    //     {id: v1(), title: "GraphQL", isDone: false},
-    // ]);
-//    let [filter, setFilter] = useState<FilterValuesType>("all");
-
-
     let todolistID1 = v1();
     let todolistID2 = v1();
 
@@ -48,29 +37,23 @@ function App() {
     });
 
 
-    function removeTask(id: string) {
-        /*        let filteredTasks = tasks.filter(t => t.id != id);
-                setTasks(filteredTasks);*/
+    function removeTask(todolistID: string, id: string) {
+        setTasks({...tasks, [todolistID]: tasks[todolistID].filter(t => t.id !== id)})
     }
 
-    function addTask(title: string) {
-        /*        let task = {id: v1(), title: title, isDone: false};
-                let newTasks = [task, ...tasks];
-                setTasks(newTasks);*/
+    function addTask(todolistID: string, title: string) {
+        let newTask = {id: v1(), title: title, isDone: false};
+        setTasks({...tasks, [todolistID]: [newTask, ...tasks[todolistID]]})
+
     }
 
-    function changeStatus(taskId: string, isDone: boolean) {
-        /*        let task = tasks.find(t => t.id === taskId);
-                if (task) {
-                    task.isDone = isDone;
-                }
+    function changeStatus(todolistID: string, askId: string, isDone: boolean) {
+        setTasks({...tasks, [todolistID]: tasks[todolistID].map(t => t.id === askId ? {...t, isDone} : t)})
 
-                setTasks([...tasks]);*/
     }
 
     function changeFilter(value: FilterValuesType, todolistID: string) {
-
-
+        setTodolists(todolists.map(tl => tl.id === todolistID ? {...tl, filter: value} : tl))
     }
 
 
